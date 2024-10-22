@@ -3,7 +3,7 @@
 </p>
 
 <h1>Network Security Groups (NSGs) and Inspecting Traffic Between Azure Virtual Machines</h1>
-This tutorial guides you through the process of creating and configuring Virtual Machines (VMs) in Azure, observing network traffic, and implementing firewall rules to control traffic between VMs. The project includes using Wireshark to capture and filter traffic such as ICMP, SSH, DHCP, DNS, and RDP, as well as configuring Azure Network Security Groups (NSGs) to manage traffic.
+This tutorial guides you through the process of creating and configuring Virtual Machines (VMs) in Microsoft Azure, observing network traffic, and implementing firewall rules to control traffic between VMs. The project includes using Wireshark to capture and filter traffic such as ICMP, SSH, DHCP, DNS, and RDP, as well as configuring Azure Network Security Groups (NSGs) to manage traffic.
 
 <h2>Environments and Technologies Used</h2>
 
@@ -62,7 +62,7 @@ This tutorial guides you through the process of creating and configuring Virtual
 🔷***Set Up Remote Desktop and Wireshark***    
 *Connect to the Windows 10 VM and set up Wireshark for packet capture.*  
 
-- Obtain the Windows 10 VM Public IP Address
+- Retrieve the Windows 10 VM Public IP Address
     - Azure > Nwtwork Settings >   
 - Use **Remote Desktop** to connect to your **Windows 10 VM**.
 - Within the Windows 10 VM, install **Wireshark**.
@@ -75,18 +75,18 @@ This tutorial guides you through the process of creating and configuring Virtual
 - Retrieve the **private IP address** of the **Ubuntu VM**.
     - Azure > 
 - From the **Windows 10 VM**, open **Command Prompt** or **PowerShell** and run:
-    ```bash
-    ping <Ubuntu-VM-private-IP>
-    ```
+   
+     `ping <Ubuntu-VM-private-IP>`
+    
 3. Observe the ping requests and replies in **Wireshark**.
 
 🔷***Ping a Public Website***  
 *Observe external network traffic.*
 
 1. From the **Windows 10 VM**, ping a public website (e.g., **google.com**) and observe the traffic in Wireshark:
-    ```bash
-    ping www.google.com
-    ```
+
+    `ping www.google.com`
+
 
 
 
@@ -113,9 +113,9 @@ This tutorial guides you through the process of creating and configuring Virtual
 
 1. Back in **Wireshark**, start a new capture and filter for **SSH traffic**.
 2. From the **Windows 10 VM**, SSH into the **Ubuntu VM** using:
-    ```bash
-    ssh <username>@<Ubuntu-VM-private-IP>
-    ```
+    
+     `ssh <username>@<Ubuntu-VM-private-IP>`
+    
 3. Interact with the SSH session, then observe the traffic in **Wireshark**.
 
 🔷***Observe DHCP Traffic***  
@@ -123,9 +123,9 @@ This tutorial guides you through the process of creating and configuring Virtual
 
 1. In **Wireshark**, filter for **DHCP traffic**.
 2. From the **Windows 10 VM**, renew the IP address:
-    ```bash
-    ipconfig /renew
-    ```
+    
+     `ipconfig /renew`
+   
 3. Observe the DHCP traffic appearing in **Wireshark**.
 
 🔷***Observe DNS Traffic***  
@@ -133,10 +133,10 @@ This tutorial guides you through the process of creating and configuring Virtual
 
 1. In **Wireshark**, filter for **DNS traffic**.
 2. From the **Windows 10 VM**, use **nslookup** to check DNS resolution for `google.com` and `disney.com`:
-    ```bash
-    nslookup google.com
-    nslookup disney.com
-    ```
+    
+    `nslookup google.com`
+    `nslookup disney.com`
+ 
 3. Observe the DNS traffic in **Wireshark**.
 
 🔷***Observe RDP Traffic***  
