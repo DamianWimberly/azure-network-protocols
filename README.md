@@ -36,12 +36,22 @@ This tutorial guides you through the process of creating and configuring Virtual
 *Set up the Resource Group and create both Windows 10 and Ubuntu VMs within the same Virtual Network/Subnet.*
 
 - In Azure, navigate to **Resource Groups** → **Create**.  
-    - **Name**: RG-Network-Actvities  
-- Create a **Windows 10 Virtual Machine** in the previously created Resource Group.  
-    - Allow it to create a new **Virtual Network** and **Subnet**.
-- Create an **Ubuntu (Linux) VM** in the same Resource Group and **Virtual Network**.
-    - Ensure the **Virtual Network** for this VM matches the one created with the Windows VM.
-    - Authentication type: **Username/Password**.
+    - **Name**: RG-Network-Actvities
+    - **Region**:  
+- In Azure, navigate to **Virtual Machines** → **Create**.
+  - **Resource Group**: Active-Directory-Lab
+  - **Name**: DC-1
+  - **Region**: (US) East US 2
+  - **Image**: Windows Server 2022 (at least 2 vCPUs)
+  - **Username**: labuser, Password: Cyberlab123!
+  - **Virtual Network**: Active-Directory-VNet; *leave subnet as default*
+- In Azure, navigate to **Virtual Machines** → **Create**.
+  - **Resource Group**: Active-Directory-Lab
+  - **Name**: DC-1
+  - **Region**: (US) East US 2
+  - **Image**: Windows Server 2022 (at least 2 vCPUs)
+  - **Username**: labuser, Password: Cyberlab123!
+  - **Virtual Network**: Active-Directory-VNet; *leave subnet as default*
 
 
 
@@ -52,6 +62,8 @@ This tutorial guides you through the process of creating and configuring Virtual
 🔷***Set Up Remote Desktop and Wireshark***    
 *Connect to the Windows 10 VM and set up Wireshark for packet capture.*  
 
+- Obtain the Windows 10 VM Public IP Address
+    - Azure > Nwtwork Settings >   
 - Use **Remote Desktop** to connect to your **Windows 10 VM**.
 - Within the Windows 10 VM, install **Wireshark**.
     - Open Wireshark and start capturing packets.
