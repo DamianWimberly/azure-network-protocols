@@ -3,7 +3,7 @@
 </p>
 
 <h1>Network Security Groups (NSGs) and Inspecting Traffic Between Azure Virtual Machines</h1>
-This tutorial guides you through the process of creating and configuring Virtual Machines (VMs) in Azure, observing network traffic, and implementing firewall rules to control traffic between VMs. The lab includes using Wireshark to capture and filter traffic such as ICMP, SSH, DHCP, DNS, and RDP, as well as configuring Azure Network Security Groups (NSGs) to manage traffic.
+This tutorial guides you through the process of creating and configuring Virtual Machines (VMs) in Azure, observing network traffic, and implementing firewall rules to control traffic between VMs. The project includes using Wireshark to capture and filter traffic such as ICMP, SSH, DHCP, DNS, and RDP, as well as configuring Azure Network Security Groups (NSGs) to manage traffic.
 
 <h2>Environments and Technologies Used</h2>
 
