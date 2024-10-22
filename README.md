@@ -11,7 +11,7 @@ This tutorial guides you through the process of creating and configuring Virtual
 - Wireshark
 - Remote Desktop
 - Azure Network Security Groups (NSG)
-- Network Protocols (SSH, RDH, DNS, HTTP/S, ICMP)
+- Network Protocols (SSH, RDP, DNS, HTTP/S, ICMP)
   
 <h2>Operating Systems Used </h2>
 
