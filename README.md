@@ -63,11 +63,11 @@ This tutorial guides you through the process of creating and configuring Virtual
 
 ---
 
-🔷***Set Up Remote Desktop and Wireshark***    
-*Connect to the Windows 10 VM and set up Wireshark for packet capture.*  
+🔷***Remote Desktop and Wireshark***    
+*Connect to the Windows 10 VM via RDP and set up Wireshark for packet capture.*  
 
-- Retrieve the Windows 10 VM Public IP Address
-    - Azure > Nwtwork Settings >   
+- Retrieve the Windows 10 VM Public IP Address:
+    - Azure > Network Settings >   
 - Use **Remote Desktop** to connect to your **Windows 10 VM**.
 - Within the Windows 10 VM, install **Wireshark**.
     - Open Wireshark and start capturing packets.
