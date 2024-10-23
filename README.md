@@ -64,14 +64,15 @@ This tutorial guides you through the process of creating and configuring Virtual
 ---
 
 🔷***Remote Desktop and Wireshark***    
-*Connect to the Windows 10 VM via RDP and set up Wireshark for packet capture.*  
+*Connect to the Windows 10 VM via RDP and set up Wireshark to view traffic between the VM's.*  
 
 - Retrieve the Windows 10 VM Public IP Address:
     - Azure > Network Settings >   
 - Use **Remote Desktop** to connect to your **Windows 10 VM**.
-- Within the Windows 10 VM, install **Wireshark**.
-    - Open Wireshark and start capturing packets.
-    - Filter for **ICMP traffic** in Wireshark.
+- Within the Windows 10 VM, download and install **Wireshark**:
+    - link > Windows x64 Installer > Install
+      - Open Wireshark and start capturing packets
+      - Filter for **ICMP traffic** in Wireshark.
 
 🔷***Ping the Ubuntu VM from the Windows 10 VM***  
 *Test ICMP connectivity between the two VMs and observe traffic in Wireshark.*
