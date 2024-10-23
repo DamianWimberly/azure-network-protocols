@@ -33,21 +33,23 @@ This tutorial guides you through the process of creating and configuring Virtual
 ---
 
 🔷***Create Resource Group and Virtual Machines (VMs)***  
-*Set up the Resource Group and create both Windows 10 and Ubuntu VMs within the same Virtual Network/Subnet.*
+*Create a Resource Group, then deploy both Windows 10 and Ubuntu VMs. During the Windows VM setup, create a Virtual Network and Subnet, and place both VMs in the same network*. 
 
 - In Azure, navigate to **Resource Groups** → **Create**.  
     - **Name**: RG-Network-Actvities
-    - **Region**:  
+    - **Region**: (US) East US 2
 - In Azure, navigate to **Virtual Machines** → **Create**.
-  - **Resource Group**: Active-Directory-Lab
-  - **Name**: DC-1
+  - **Resource Group**: RG-Network_Activites 
+  - **Name**: Windows-VM
   - **Region**: (US) East US 2
-  - **Image**: Windows Server 2022 (at least 2 vCPUs)
+  - **Image**: Windows 10 Pro (at least 2 vCPUs)
   - **Username**: labuser, Password: Cyberlab123!
-  - **Virtual Network**: Active-Directory-VNet; *leave subnet as default*
+  - Within the VM creation, navigate to the *Networking* tab and select **Create new**:    
+      - Name: Project-VNnet
+      -  Subnet: Leave as *default*     
 - In Azure, navigate to **Virtual Machines** → **Create**.
   - **Resource Group**: Active-Directory-Lab
-  - **Name**: DC-1
+  - **Name**: Linux-VM
   - **Region**: (US) East US 2
   - **Image**: Windows Server 2022 (at least 2 vCPUs)
   - **Username**: labuser, Password: Cyberlab123!
