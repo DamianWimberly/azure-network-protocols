@@ -43,7 +43,7 @@ This tutorial guides you through the process of creating and configuring Virtual
   - **Name**: Windows-VM
   - **Region**: (US) East US 2
   - **Image**: Windows 10 Pro (at least 2 vCPUs)
-  - **Authentication Type**: select → **Password** (*RDP into the VM with the username and password*)
+  - **Authentication Type**: select → **Password** (*the username and password are needed to RDP into the VM*)
   - Navigate to the **Networking** tab → **Create new**:    
       - Name: Project-VNnet
       - Subnet: Leave as *default*     
@@ -52,7 +52,7 @@ This tutorial guides you through the process of creating and configuring Virtual
   - **Name**: Ubunto-VM
   - **Region**: (US) East US 2
   - **Image**: Ubunto Server 22.04 (at least 2 vCPUs)
-  - **Authentication Type**: select → **Password** (*RDP into the VM with the username and password*)
+  - **Authentication Type**: select → **Password** (*the username and password are needed to RDP into the VM*)
   - Navigate to the **Networking** tab:
       -  **Virtual Network**: Project-VNnet
       -  Subnet: Leave as *default*
@@ -64,14 +64,14 @@ This tutorial guides you through the process of creating and configuring Virtual
 ---
 
 🔷***Remote Desktop and Wireshark***    
-*Connect to the Windows 10 VM via RDP and set up Wireshark to view traffic between the VM's.*  
+*Connect to the Windows 10 VM via RDP and set up Wireshark to view traffic between the VMs.*  
 
 - Retrieve the **public IP address** of the **Windows 10 VM**:
     - Azure Portal → Virtual Machines → Windows-VM → Overview → Network Settings   
 - Use **Remote Desktop** to connect and log in to the **Windows 10 VM**.
-- Within the Windows 10 VM, download and install **Wireshark**:
+- Within the **Windows 10 VM**, download and install **Wireshark**:
     - [link](https://your-link-here) → Windows x64 Installer → Install
-      - Open Wireshark and start capturing packets
+      - Open **Wireshark** and start capturing packets
       - Filter for **ICMP traffic** in Wireshark.
 
 🔷***Ping the Ubunto Server VM from the Windows 10 VM***  
@@ -79,7 +79,7 @@ This tutorial guides you through the process of creating and configuring Virtual
 
 - Retrieve the **private IP address** of the **Ubunto Server VM**:
     - Azure Portal → Virtual Machines → Ubunto-VM → Overview → Network Settings 
-- Within the *Windows 10 VM**, open **PowerShell** and run:
+- Within the **Windows 10 VM**, open **PowerShell** and run:
    
      `ping <Ubunto-VM-private-IP>`
     
@@ -88,7 +88,7 @@ This tutorial guides you through the process of creating and configuring Virtual
 🔷***Ping a Public Website***  
 *Observe external network traffic.*
 
--  Within the **Windows 10 VM**, ping a public website (e.g., **google.com**) and observe the traffic in Wireshark:
+-  Within the **Windows 10 VM**, ping a public website (e.g., **google.com**) and observe the traffic in **Wireshark**:
 
     `ping www.google.com`
  
@@ -102,16 +102,16 @@ This tutorial guides you through the process of creating and configuring Virtual
 🔷***Block ICMP Traffic Using Network Security Group (NSG)***  
 *Use Azure's NSG to block ICMP traffic and observe the results.*
 
-- From the Windows 10 VM, initate a perpetual/non-stop ping:  
-    - Open **PowerShell** and run:  `ping <Ubuntu-VM-private-IP> -t`  
-- In Azure, navigate to the **Network Security Group (NSG)** for the **Ubuntu Server VM**:
+- Within the **Windows 10 VM**, open **Powershell** and run a perpetual/non-stop ping:  
+    -   `ping <Ubuntu-VM-private-IP> -t`  
+- In Azure, navigate to **Network Security Group (NSG)** for the **Ubuntu VM**:
     - Azure Portal → Virtual machines → Ubunto-VM → Networking → Network Settings → Ubunto-VM-nsg
     - Disable incoming **ICMP traffic** by updating the NSG rules:
         -  Settings → Inbound security Rules: From ANY source, *deny ICMPv4* 
 - Back in the **Windows 10 VM**, observe the failed ping attempts in **Wireshark**.
 - Re-enable ICMP traffic in the **NSG** and verify successful ping responses:
     - Delete the *deny ICMPv4* rule previoulsy created in Ubunto-VM-nsg
-- Stop the Wireshark capture
+- *Stop* the **Wireshark** capture
 
 
 
@@ -122,13 +122,12 @@ This tutorial guides you through the process of creating and configuring Virtual
 🔷***Observe SSH Traffic***  
 *Capture and analyze SSH traffic between the two VMs.*
 
-- Open Wireshark in the Windows 10 VM:
+- Open Wireshark in the **Windows 10 VM**:
     - In **Wireshark**, start a new capture and filter for **SSH traffic**.
-- From the **Windows 10 VM**, SSH into the **Ubuntu Server VM** via Powershell:
-    
-     `ssh <username>@<Ubuntu-VM-private-IP>`
-   - Use the Ubunto VM password
-   - Observe the prompt change
+- From the **Windows 10 VM**, SSH into the **Ubuntu Server VM** via **Powershell**:  
+    `ssh <username>@<Ubuntu-VM-private-IP>`
+   - Use the **Ubunto VM** password
+   - Observe the *prompt change*
    - Run `hostname` to confirm connection to the VM  
 - Interact with the SSH session, then observe the traffic in **Wireshark**.
   - Use `tcp.port ==22` to observe the same traffic 
@@ -138,18 +137,18 @@ This tutorial guides you through the process of creating and configuring Virtual
 *Test DHCP traffic by renewing the IP address of the Windows 10 VM.*
 
 - In **Wireshark**, filter for **DHCP traffic**.
-- Within the **Windows 10 VM**, renew the IP address in Powershell:
+- Within the **Windows 10 VM**, renew the IP address via **Powershell**:
     
      `ipconfig /renew`
   
-- Observe the DHCP traffic appearing in **Wireshark**.
+- Observe the DHCP traffic in **Wireshark**.
   - Observe the same trafffic filtering for `udp.port==67||udp.port==68`
 
 🔷***Observe DNS Traffic***  
 *Use nslookup to generate DNS traffic.*
 
 - In **Wireshark**, filter for **DNS traffic**.
-- From the **Windows the VM**, run **nslookup** in Powershell to check DNS resolution for `google.com` and `disney.com`:
+- From the **Windows the VM**, run **nslookup** in **Powershell** to check DNS resolution for `google.com` and `disney.com`:
     
     `nslookup google.com`
     `nslookup disney.com`
@@ -161,7 +160,8 @@ This tutorial guides you through the process of creating and configuring Virtual
 🔷***Observe RDP Traffic***  
 *Monitor Remote Desktop traffic and analyze its continuous nature.*
 
-- In **Wireshark**, filter for **RDP traffic** `tcp.port == 3389`.
+- In **Wireshark**, filter for **RDP traffic**:  
+    `tcp.port == 3389`
 - Observe the continuous stream of RDP traffic. This is because RDP continuously transmits data to maintain the live connection.
 
 
