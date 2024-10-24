@@ -33,13 +33,13 @@ This tutorial guides you through the process of creating and configuring Virtual
 ---
 
 🔷***Create Resource Group and Virtual Machines (VMs)***  
-*Create a Resource Group, then deploy both Windows 10 and Ubuntu VMs. During the Windows VM setup, create a Virtual Network, and place both VMs in the same network*. 
+*Create a Resource Group, then deploy both Windows 10 and Ubunto Server VMs. During the Windows 10 VM setup, create a Virtual Network and place both VMs in the same network*. 
 
-- In Azure, navigate to **Resource Groups** → **Create**.  
+- In Azure, navigate to **Resource Groups** → **Create**: 
     - **Name**: RG-Network-Actvities
     - **Region**: (US) East US 2
-- In Azure, navigate to **Virtual Machines** → **Create**.
-  - **Resource Group**: RG-Network_Activites 
+- In Azure, navigate to **Virtual Machines** → **Create**:
+  - **Resource Group**: RG-Network-Activites 
   - **Name**: Windows-VM
   - **Region**: (US) East US 2
   - **Image**: Windows 10 Pro (at least 2 vCPUs)
@@ -47,9 +47,9 @@ This tutorial guides you through the process of creating and configuring Virtual
   - Navigate to the **Networking** tab → **Create new**:    
       - Name: Project-VNnet
       - Subnet: Leave as *default*     
-- In Azure, navigate to **Virtual Machines** → **Create**.
-  - **Resource Group**: RG-Network_Activites
-  - **Name**: Linux-VM
+- In Azure, navigate to **Virtual Machines** → **Create**:
+  - **Resource Group**: RG-Network-Activites
+  - **Name**: Ubunto-VM
   - **Region**: (US) East US 2
   - **Image**: Ubunto Server 22.04 (at least 2 vCPUs)
   - **Authentication Type**: select → **Password** (*RDP into the VM with the username and password*)
@@ -66,32 +66,32 @@ This tutorial guides you through the process of creating and configuring Virtual
 🔷***Remote Desktop and Wireshark***    
 *Connect to the Windows 10 VM via RDP and set up Wireshark to view traffic between the VM's.*  
 
-- Retrieve the Windows 10 VM Public IP Address:
-    - Azure > Network Settings >   
-- Use **Remote Desktop** to connect to your **Windows 10 VM**.
+- Retrieve the **public IP address** of the **Windows 10 VM**:
+    - Azure Portal → Virtual Machines → Windows-VM → Overview → Network Settings   
+- Use **Remote Desktop** to connect and log in to the **Windows 10 VM**.
 - Within the Windows 10 VM, download and install **Wireshark**:
-    - link > Windows x64 Installer > Install
+    - link → Windows x64 Installer → Install
       - Open Wireshark and start capturing packets
       - Filter for **ICMP traffic** in Wireshark.
 
-🔷***Ping the Ubuntu VM from the Windows 10 VM***  
+🔷***Ping the Ubunto Server VM from the Windows 10 VM***  
 *Test ICMP connectivity between the two VMs and observe traffic in Wireshark.*
 
-- Retrieve the **private IP address** of the **Ubuntu VM**.
-    - Azure > 
-- From the **Windows 10 VM**, open **Command Prompt** or **PowerShell** and run:
+- Retrieve the **private IP address** of the **Ubunto Server VM**:
+    - Azure Portal → Virtual Machines → Ubunto-VM → Overview → Network Settings 
+- Within the *Windows 10 VM**, open **PowerShell** and run:
    
-     `ping <Ubuntu-VM-private-IP>`
+     `ping <Ubunto-VM-private-IP>`
     
-3. Observe the ping requests and replies in **Wireshark**.
+- Observe the ping requests and replies in **Wireshark**.
 
 🔷***Ping a Public Website***  
 *Observe external network traffic.*
 
-1. From the **Windows 10 VM**, ping a public website (e.g., **google.com**) and observe the traffic in Wireshark:
+-  Within the **Windows 10 VM**, ping a public website (e.g., **google.com**) and observe the traffic in Wireshark:
 
     `ping www.google.com`
-
+ 
 
 
 
@@ -102,10 +102,16 @@ This tutorial guides you through the process of creating and configuring Virtual
 🔷***Block ICMP Traffic Using Network Security Group (NSG)***  
 *Use Azure's NSG to block ICMP traffic and observe the results.*
 
-1. In Azure, navigate to the **Network Security Group (NSG)** for your **Ubuntu VM**.
-2. Disable incoming **ICMP traffic** by updating the NSG rules.
-3. Back in the **Windows 10 VM**, observe the failed ping attempts in **Wireshark**.
-4. Re-enable ICMP traffic in the **NSG** and verify successful ping responses.
+- From the Windows 10 VM, initate a perpetual/non-stop ping:  
+    - Open **PowerShell** and run:  `ping <Ubuntu-VM-private-IP> -t`  
+- In Azure, navigate to the **Network Security Group (NSG)** for the **Ubuntu Server VM**:
+    - Azure Portal → Virtual machines → Ubunto-VM → Networking → Network Settings → Ubunto-VM-nsg
+    - Disable incoming **ICMP traffic** by updating the NSG rules:
+        -  Settings → Inbound security Rules: From ANY source, *deny ICMPv4* 
+- Back in the **Windows 10 VM**, observe the failed ping attempts in **Wireshark**.
+- Re-enable ICMP traffic in the **NSG** and verify successful ping responses:
+    - Delete the *deny ICMPv4* rule previoulsy created in Ubunto-VM-nsg
+- Stop the Wireshark capture
 
 
 
@@ -116,38 +122,46 @@ This tutorial guides you through the process of creating and configuring Virtual
 🔷***Observe SSH Traffic***  
 *Capture and analyze SSH traffic between the two VMs.*
 
-1. Back in **Wireshark**, start a new capture and filter for **SSH traffic**.
-2. From the **Windows 10 VM**, SSH into the **Ubuntu VM** using:
+- Open Wireshark in the Windows 10 VM:
+    - In **Wireshark**, start a new capture and filter for **SSH traffic**.
+- From the **Windows 10 VM**, SSH into the **Ubuntu Server VM** via Powershell:
     
      `ssh <username>@<Ubuntu-VM-private-IP>`
-    
-3. Interact with the SSH session, then observe the traffic in **Wireshark**.
+   - Use the Ubunto VM password
+   - Observe the prompt change
+   - Run `hostname` to confirm connection to the VM  
+- Interact with the SSH session, then observe the traffic in **Wireshark**.
+  - Use (tcp.port ==22) to observe the same traffic 
+  - Run `Exit` to end SSH connection
 
 🔷***Observe DHCP Traffic***  
 *Test DHCP traffic by renewing the IP address of the Windows 10 VM.*
 
-1. In **Wireshark**, filter for **DHCP traffic**.
-2. From the **Windows 10 VM**, renew the IP address:
+- In **Wireshark**, filter for **DHCP traffic**.
+- Within the **Windows 10 VM**, renew the IP address in Powershell:
     
      `ipconfig /renew`
-   
-3. Observe the DHCP traffic appearing in **Wireshark**.
+  
+- Observe the DHCP traffic appearing in **Wireshark**.
+  - Observe the same trafffic filtering for (udp.port==67||udp.port==68)
 
 🔷***Observe DNS Traffic***  
 *Use nslookup to generate DNS traffic.*
 
-1. In **Wireshark**, filter for **DNS traffic**.
-2. From the **Windows 10 VM**, use **nslookup** to check DNS resolution for `google.com` and `disney.com`:
+- In **Wireshark**, filter for **DNS traffic**.
+- From the **Windows the VM**, run **nslookup** in Powershell to check DNS resolution for `google.com` and `disney.com`:
     
     `nslookup google.com`
     `nslookup disney.com`
- 
-3. Observe the DNS traffic in **Wireshark**.
+
+- Observe the DNS traffic in **Wireshark**.
+  - Observe the same trafffic filtering for (udp.port==53||tcp.port==53)
+   
 
 🔷***Observe RDP Traffic***  
 *Monitor Remote Desktop traffic and analyze its continuous nature.*
 
-1. In **Wireshark**, filter for **RDP traffic** (tcp.port == 3389).
-2. Observe the continuous stream of RDP traffic. This is because RDP continuously transmits data to maintain the live connection.
+- In **Wireshark**, filter for **RDP traffic** (tcp.port == 3389).
+- Observe the continuous stream of RDP traffic. This is because RDP continuously transmits data to maintain the live connection.
 
 
