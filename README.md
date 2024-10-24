@@ -70,7 +70,7 @@ This tutorial guides you through the process of creating and configuring Virtual
     - Azure Portal → Virtual Machines → Windows-VM → Overview → Network Settings   
 - Use **Remote Desktop** to connect and log in to the **Windows 10 VM**.
 - Within the Windows 10 VM, download and install **Wireshark**:
-    - link → Windows x64 Installer → Install
+    - [link](https://your-link-here) → Windows x64 Installer → Install
       - Open Wireshark and start capturing packets
       - Filter for **ICMP traffic** in Wireshark.
 
@@ -131,7 +131,7 @@ This tutorial guides you through the process of creating and configuring Virtual
    - Observe the prompt change
    - Run `hostname` to confirm connection to the VM  
 - Interact with the SSH session, then observe the traffic in **Wireshark**.
-  - Use (tcp.port ==22) to observe the same traffic 
+  - Use `tcp.port ==22` to observe the same traffic 
   - Run `Exit` to end SSH connection
 
 🔷***Observe DHCP Traffic***  
@@ -143,7 +143,7 @@ This tutorial guides you through the process of creating and configuring Virtual
      `ipconfig /renew`
   
 - Observe the DHCP traffic appearing in **Wireshark**.
-  - Observe the same trafffic filtering for (udp.port==67||udp.port==68)
+  - Observe the same trafffic filtering for `udp.port==67||udp.port==68`
 
 🔷***Observe DNS Traffic***  
 *Use nslookup to generate DNS traffic.*
@@ -155,13 +155,13 @@ This tutorial guides you through the process of creating and configuring Virtual
     `nslookup disney.com`
 
 - Observe the DNS traffic in **Wireshark**.
-  - Observe the same trafffic filtering for (udp.port==53||tcp.port==53)
+  - Observe the same trafffic filtering for `udp.port==53||tcp.port==53`
    
 
 🔷***Observe RDP Traffic***  
 *Monitor Remote Desktop traffic and analyze its continuous nature.*
 
-- In **Wireshark**, filter for **RDP traffic** (tcp.port == 3389).
+- In **Wireshark**, filter for **RDP traffic** `tcp.port == 3389`.
 - Observe the continuous stream of RDP traffic. This is because RDP continuously transmits data to maintain the live connection.
 
 
