@@ -1,4 +1,4 @@
-<p align="center">
+-<p align="center">
 <img src="https://i.imgur.com/Ua7udoS.png" alt="Traffic Examination"/>
 </p>
 
@@ -71,7 +71,7 @@ This tutorial guides you through the process of creating and configuring Virtual
 - Use **Remote Desktop** to connect and log in to the **Windows 10 VM**.
 - Within the **Windows 10 VM**, download and install **Wireshark**:
     - [link](https://your-link-here) → Windows x64 Installer → Install
-      - Open **Wireshark** and start capturing packets
+      - Open **Wireshark** and start capturing packets via the *Shark Fin* icon 
       - Filter for **ICMP traffic** in Wireshark.
 
 🔷***Ping the Ubunto Server VM from the Windows 10 VM***  
@@ -103,15 +103,15 @@ This tutorial guides you through the process of creating and configuring Virtual
 *Use Azure's NSG to block ICMP traffic and observe the results.*
 
 - Within the **Windows 10 VM**, open **Powershell** and run a perpetual/non-stop ping:  
-    -   `ping <Ubuntu-VM-private-IP> -t`  
+       `ping <Ubuntu-VM-private-IP> -t`  
 - In Azure, navigate to **Network Security Group (NSG)** for the **Ubuntu VM**:
     - Azure Portal → Virtual machines → Ubunto-VM → Networking → Network Settings → Ubunto-VM-nsg
     - Disable incoming **ICMP traffic** by updating the NSG rules:
-        -  Settings → Inbound security Rules: From ANY source, *deny ICMPv4* 
+      - Settings → Inbound security Rules → Add → From ANY source, *deny ICMPv4* w/ Priority: 290
 - Back in the **Windows 10 VM**, observe the failed ping attempts in **Wireshark**.
 - Re-enable ICMP traffic in the **NSG** and verify successful ping responses:
     - Delete the *deny ICMPv4* rule previoulsy created in Ubunto-VM-nsg
-- *Stop* the **Wireshark** capture
+- *Stop* the **Wireshark** capture via the *Red Square* icon 
 
 
 
@@ -130,8 +130,8 @@ This tutorial guides you through the process of creating and configuring Virtual
    - Observe the *prompt change*
    - Run `hostname` to confirm connection to the VM  
 - Interact with the SSH session, then observe the traffic in **Wireshark**.
-  - Use `tcp.port ==22` to observe the same traffic 
-  - Run `Exit` to end SSH connection
+  - Use `tcp.port ==22` to observe the SSH traffic 
+  - Run `exit` to end SSH connection
 
 🔷***Observe DHCP Traffic***  
 *Test DHCP traffic by renewing the IP address of the Windows 10 VM.*
